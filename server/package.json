@@ -15,6 +15,7 @@
       "cors": "^2.8.5",
       "dotenv": "^8.2.0",
       "express": "^4.17.1",
+      "jsonwebtoken": "^8.5.1",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.10",
       "typeorm": "0.2.25"
@@ -22,6 +23,7 @@
    "devDependencies": {
       "@types/cors": "^2.8.6",
       "@types/express": "^4.17.6",
+      "@types/jsonwebtoken": "^8.5.0",
       "@types/node": "^8.0.29",
       "ts-node": "^8.10.2",
       "ts-node-dev": "^1.0.0-pre.49",
