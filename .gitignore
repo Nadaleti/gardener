@@ -4,4 +4,4 @@
 */build/
 */tmp/
 */temp/
-server/src/database/environment/*.env
+*.env
