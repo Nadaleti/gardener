@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
-import * as fs from 'fs';
+import dotenv from 'dotenv';
+import fs from 'fs';
 import path from 'path';
 
 const env = process.env.NODE_ENV || 'dev';
