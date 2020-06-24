@@ -13,9 +13,8 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     return res.sendStatus(401);
   }
 
-  jwt.verify(token, process.env.JWT_SECRET as string, (err: any) => {
-    if (err) {
-      console.log(err);
+  jwt.verify(token, process.env.JWT_SECRET as string, (error: any) => {
+    if (error) {
       return res.sendStatus(403);
     }
 

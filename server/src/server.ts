@@ -1,20 +1,18 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
-import { createConnection } from "typeorm";
+import { createConnection } from 'typeorm';
 
+import authRouter from './routes/auth';
 import APIError from "./errors/APIError";
 
 const app = express();
-
 const connection = createConnection();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json('Hello world!');
-})
+app.use('/auth', authRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const error = new APIError('Not found', 404);
