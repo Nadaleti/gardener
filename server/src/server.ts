@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRouter);
-app.use('/vase', verifyToken, vaseRouter);
+app.use('/', verifyToken, vaseRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const error = new APIError('Not found', 404);

@@ -22,7 +22,15 @@ class VaseController {
           })
         response.status(200).json(vasesResponse)
       })
-      .catch((error) => {next(error)});
+      .catch((error) => { next(error) });
+  }
+
+  create(request: Request, response: Response, next: NextFunction) {
+    const userId = Number.parseInt(request.params['userId']);
+
+    vaseService.createVase(userId, request.body)
+      .then(() => { response.status(201).send() })
+      .catch((error) => { next(error) });
   }
 }
 
