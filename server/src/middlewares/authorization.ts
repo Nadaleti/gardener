@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-
 import { Request, Response, NextFunction } from 'express';
+
+import APIError from '../errors/APIError';
 
 dotenv.config();
 
@@ -10,12 +11,14 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   const token = authHeader && authHeader.split(' ')[1];
 
   if (token == null) {
-    return res.sendStatus(401);
+    next(new APIError('Unauthorized', 401));
+    return;
   }
 
   jwt.verify(token, process.env.JWT_SECRET as string, (error: any) => {
     if (error) {
-      return res.sendStatus(403);
+      next(new APIError('Forbidden', 403));
+      return;
     }
 
     next();
