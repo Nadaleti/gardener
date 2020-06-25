@@ -1,13 +1,16 @@
 import 'reflect-metadata';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express, { Request, Response, NextFunction } from 'express';
 import { createConnection } from 'typeorm';
 
 import authRouter from './routes/auth';
-import APIError from "./errors/APIError";
+import APIError from './errors/APIError';
 
 const app = express();
 const connection = createConnection();
+
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
