@@ -5,7 +5,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import { createConnection } from 'typeorm';
 
 import authRouter from './routes/auth';
+import vaseRouter from './routes/vase';
 import APIError from './errors/APIError';
+import { verifyToken } from './middlewares/authorization';
 
 const app = express();
 const connection = createConnection();
@@ -16,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRouter);
+app.use('/vase', verifyToken, vaseRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const error = new APIError('Not found', 404);
