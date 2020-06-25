@@ -1,11 +1,23 @@
 import bcrypt from 'bcrypt';
 import { getCustomRepository } from 'typeorm';
 
+import JWTService from './jwt';
 import UserRepository from '../repository/user';
 import { User } from '../models/User';
 import APIError from '../errors/APIError';
 
 class AuthService {
+  async login(email: string, password: string) {
+    const user = await getCustomRepository(UserRepository)
+      .findByEmail(email);
+
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      throw new APIError('Invalid e-mail or password', 400);
+    }
+
+    return new JWTService().generateAccessToken(user.id);
+  }
+
   async register(registration: RegistrationRequest) {
     this.validateRegistration(registration);
     await this.validateEmail(registration.email)
