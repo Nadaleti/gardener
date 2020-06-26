@@ -8,7 +8,7 @@ class VaseRepository extends Repository<Vase> {
     return getConnection()
       .createQueryBuilder(Vase, 'vase')
       .select('vase')
-      .leftJoinAndSelect('vase.user', 'user')
+      .leftJoin('vase.user', 'user')
       .where('vase.user.id = :userId', {userId: userId})
       .getMany();
   }
@@ -21,7 +21,7 @@ class VaseRepository extends Repository<Vase> {
     return getConnection()
       .createQueryBuilder(Vase, 'vase')
       .select('vase')
-      .leftJoinAndSelect('vase.user', 'user')
+      .leftJoin('vase.user', 'user')
       .where('user.id = :userId', {userId: userId})
       .andWhere('vase.name LIKE :name', {name: '%' + vaseName + '%'})
       .getMany();
