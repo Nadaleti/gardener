@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+
 import APIError from '../errors/APIError';
 
 export const verifyUserIdentity = (req: Request, res: Response, next: NextFunction) => {
