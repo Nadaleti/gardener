@@ -22,6 +22,13 @@ class UserController {
       })
       .catch((error) => { next(error) });
   }
+
+  update(request: Request, response: Response, next: NextFunction) {
+    const userId = Number.parseInt(request.params.userId);
+    userService.updateUser(userId, request.body)
+      .then(() => {response.status(200).send()})
+      .catch((error) => {next(error)});
+  }
 }
 
 export default UserController;
