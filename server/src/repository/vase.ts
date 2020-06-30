@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, getConnection } from 'typeorm';
 
-import { Vase } from '../models/Vase';
+import { Vase } from '../models/entity';
 
 @EntityRepository(Vase)
 class VaseRepository extends Repository<Vase> {

@@ -1,6 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import UserRepository from '../repository/user';
+import { UserUpdateRequest } from '../models/request';
 import APIError from '../errors/APIError';
 
 class UserService {

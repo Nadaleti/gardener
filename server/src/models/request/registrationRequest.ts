@@ -1,4 +1,4 @@
-interface RegistrationRequest {
+export default interface RegistrationRequest {
   name: string;
   gender: string;
   city: string;

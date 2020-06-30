@@ -2,8 +2,9 @@ import bcrypt from 'bcrypt';
 import { getCustomRepository } from 'typeorm';
 
 import JWTService from './jwt';
+import { RegistrationRequest } from '../models/request';
 import UserRepository from '../repository/user';
-import { User } from '../models/User';
+import { User } from '../models/entity/User';
 import APIError from '../errors/APIError';
 
 class AuthService {
