@@ -6,8 +6,7 @@ import APIError from '../errors/APIError';
 
 class UserService {
   getUser(id: number) {
-    return getCustomRepository(UserRepository)
-      .findOne({id: id});
+    return getCustomRepository(UserRepository).findOne(id);
   }
 
   getUserByEmail(email: string) {
@@ -28,7 +27,7 @@ class UserService {
     user.city = request.city || user.city;
     user.uf = request.uf || user.uf;
 
-    return await getCustomRepository(UserRepository).save(user);
+    await getCustomRepository(UserRepository).save(user);
   }
 }
 

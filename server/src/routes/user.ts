@@ -12,5 +12,7 @@ userRoutes.get('/:userId', verifyUserIdentity, userController.show);
 userRoutes.patch('/:userId', verifyUserIdentity, userController.update);
 userRoutes.get('/:userId/vase', verifyUserIdentity, vaseController.index);
 userRoutes.post('/:userId/vase', verifyUserIdentity, vaseController.create);
+userRoutes.patch('/:userId/vase/:vaseId', verifyUserIdentity, vaseController.update);
+userRoutes.delete('/:userId/vase/:vaseId', verifyUserIdentity, vaseController.delete);
 
 export default userRoutes;

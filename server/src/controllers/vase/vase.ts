@@ -32,6 +32,22 @@ class VaseController {
       .then(() => { response.status(201).send() })
       .catch((error) => { next(error) });
   }
+
+  update(request: Request, response: Response, next: NextFunction) {
+    const vaseId = Number.parseInt(request.params['vaseId']);
+
+    vaseService.updateVase(vaseId, request.body)
+      .then(() => { response.status(200).send() })
+      .catch((error) => { next(error) });
+  }
+
+  delete(request: Request, response: Response, next: NextFunction) {
+    const vaseId = Number.parseInt(request.params['vaseId']);
+
+    vaseService.deleteVase(vaseId)
+      .then(() => { response.status(200).send() })
+      .catch((error) => { next(error) });
+  }
 }
 
 export default VaseController;
