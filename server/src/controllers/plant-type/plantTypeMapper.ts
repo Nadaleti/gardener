@@ -1,11 +1,11 @@
-import { PlantTypeEnum } from './plantType.enum';
+import { PlantTypeEnum } from '../../models/enum/plantType.enum';
 
 export interface PlantType {
   name: string;
   iconPath: string;
 }
 
-export const PlantTypeMap = new Map<PlantTypeEnum, PlantType>()
+export const PlantTypeMap = new Map<string, PlantType>()
   .set(PlantTypeEnum.ARVORES, {
     name: 'Árvores', iconPath: '/uploads/apple-tree.svg'
   })

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 import { User } from './User';
+import { PlantTypeEnum } from '../enum/plantType.enum';
 
 @Entity()
 export class Vase {
@@ -14,7 +15,7 @@ export class Vase {
   location: string;
 
   @Column()
-  plantType: string;
+  plantType: PlantTypeEnum;
 
   @ManyToOne(type => User, user => user.vases)
   user: User;
