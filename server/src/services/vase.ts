@@ -40,7 +40,7 @@ class VaseService {
   }
 
   async updateVase(vaseId: number, vase: VaseRequest) {
-    const matchedVase = await getCustomRepository(VaseRepository).findOne({ id: vaseId });
+    const matchedVase = await getCustomRepository(VaseRepository).findOne(vaseId);
 
     if (!matchedVase) {
       throw new APIError('Vase not found', 400);
@@ -51,6 +51,15 @@ class VaseService {
     matchedVase.plantType = getByPlantType(vase.plantType) || matchedVase.plantType;
 
     await getCustomRepository(VaseRepository).save(matchedVase);
+  }
+
+  async deleteVase(vaseId: number) {
+    await getCustomRepository(VaseRepository).findOne(vaseId)
+      .then((vase) => {
+        if (!vase) throw new APIError('Vase not found', 400)
+      });
+
+    await getCustomRepository(VaseRepository).delete(vaseId);
   }
 
   private validateVaseRequest(request: VaseRequest) {
