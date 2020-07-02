@@ -7,6 +7,7 @@ import { createConnection } from 'typeorm';
 
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
+import plantTypeRouter from './routes/plant-type';
 
 import APIError from './errors/APIError';
 import { verifyToken } from './middlewares/authorization';
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/user', verifyToken, userRouter);
+app.use('/plant-type', plantTypeRouter)
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
