@@ -6,8 +6,7 @@ import APIError from '../errors/APIError';
 
 class UserService {
   getUser(id: number) {
-    return getCustomRepository(UserRepository)
-      .findOne({id: id});
+    return getCustomRepository(UserRepository).findOne(id);
   }
 
   getUserByEmail(email: string) {
