@@ -28,7 +28,7 @@ class UserService {
     user.city = request.city || user.city;
     user.uf = request.uf || user.uf;
 
-    return await getCustomRepository(UserRepository).save(user);
+    await getCustomRepository(UserRepository).save(user);
   }
 }
 
