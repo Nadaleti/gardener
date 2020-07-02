@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import AuthService from '../../services/auth';
+import { LoginRequest } from '../../models/request';
 
 const authService = new AuthService();
 

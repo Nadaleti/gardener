@@ -1,4 +1,4 @@
-interface UserUpdateRequest {
+export default interface UserUpdateRequest {
   name: string;
   email: string;
   gender: string;

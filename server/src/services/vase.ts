@@ -1,6 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
-import { Vase } from '../models/Vase';
+import { Vase } from '../models/entity';
+import VaseRequest from '../models/request/vaseRequest';
 import VaseRepository from '../repository/vase';
 import APIError from '../errors/APIError';
 import UserService from './user';

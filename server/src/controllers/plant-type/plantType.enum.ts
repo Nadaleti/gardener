@@ -1,0 +1,6 @@
+export enum PlantTypeEnum {
+  ARVORES,
+  CACTOS_SUCULENTAS,
+  FLORES,
+  FRUTAS_LEGUMES
+}
