@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import VaseService from '../../services/vase';
 import APIError from '../../errors/APIError';
+import { PlantTypeMap } from '../plant-type/plantTypeMapper';
 
 const vaseService = new VaseService();
 
@@ -18,7 +19,7 @@ class VaseController {
               id: vase.id,
               location: vase.location,
               name: vase.name,
-              plantType: vase.plantType
+              plantType: PlantTypeMap.get(vase.plantType)
             }
           })
         response.status(200).json(vasesResponse)
@@ -40,7 +41,7 @@ class VaseController {
           id: vase.id,
           location: vase.location,
           name: vase.name,
-          plantType: vase.plantType
+          plantType: PlantTypeMap.get(vase.plantType)
         });
       })
       .catch((error) => { next(error) });
