@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import VaseService from '../../services/vase';
+import APIError from '../../errors/APIError';
 
 const vaseService = new VaseService();
 
@@ -21,6 +22,26 @@ class VaseController {
             }
           })
         response.status(200).json(vasesResponse)
+      })
+      .catch((error) => { next(error) });
+  }
+
+  show(request: Request, response: Response, next: NextFunction) {
+    const vaseId = Number.parseInt(request.params['vaseId']);
+
+    vaseService.getVase(vaseId)
+      .then((vase) => {
+        if (!vase) {
+          next(new APIError('Vase not found', 400));
+          return;
+        }
+
+        response.status(200).json({
+          id: vase.id,
+          location: vase.location,
+          name: vase.name,
+          plantType: vase.plantType
+        });
       })
       .catch((error) => { next(error) });
   }

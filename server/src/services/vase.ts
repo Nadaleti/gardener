@@ -10,6 +10,10 @@ import { getByPlantType } from '../models/enum/plantType.enum';
 const userService = new UserService();
 
 class VaseService {
+  getVase(vaseId: number) {
+    return getCustomRepository(VaseRepository).findOne(vaseId);
+  }
+  
   getByName(userId: number, vaseName: string) {
     return getCustomRepository(VaseRepository).findUserVasesByName(userId, vaseName);
   }
