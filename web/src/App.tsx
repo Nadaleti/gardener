@@ -2,7 +2,7 @@ import React from 'react';
 
 import Routes from './routes';
 
-import './App.css';
+import './App.module.scss';
 
 function App() {
   return (
