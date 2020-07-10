@@ -1,0 +1,40 @@
+@import '../../variables.scss';
+
+.Button {
+  height: 45px;
+  width: 180px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 2px solid $default-green;
+  cursor: pointer;
+  outline: none;
+  transition: ease-in-out .2s;
+  
+  &.Primary {
+    background-color: $default-green;
+    color: #ffffff;
+    
+    &:hover {
+      background-color: rgba($default-green, .9);
+      border-color: transparent;
+    }
+
+    &:disabled {
+      background-color: rgba($default-green, .7);
+      border-color: transparent;
+      cursor: not-allowed;
+    }
+  }
+
+  &.Secondary {
+    background-color: transparent;
+    color: $default-green;
+    
+    &:hover {
+      background-color: $default-green;
+      color: #ffffff;
+    }
+  }
+}
