@@ -1,6 +1,9 @@
 @import '../../variables.scss';
 
 .Button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 45px;
   width: 180px;
   font-family: inherit;

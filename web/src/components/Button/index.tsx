@@ -1,13 +1,17 @@
 import React, { FunctionComponent, ButtonHTMLAttributes } from 'react';
 
+import Spinner from '../Loader';
+
 import classes from './Button.module.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  btnStyle?: string;
+  btnStyle?: string,
+  loading?: boolean
 }
 
 const Button: FunctionComponent<ButtonProps> = (props) => {
   const buttonClasses = [classes.Button];
+  const buttonProps = [props].map(({btnStyle, loading, ...rest}) => rest)[0];
 
   switch(props.btnStyle) {
     case 'secondary':
@@ -20,8 +24,8 @@ const Button: FunctionComponent<ButtonProps> = (props) => {
   }
 
   return (
-    <button className={buttonClasses.join(' ')} {...props}>
-      {props.children}
+    <button className={buttonClasses.join(' ')} {...buttonProps}>
+      {props.loading ? <Spinner /> : props.children}
     </button>
   )
 }
