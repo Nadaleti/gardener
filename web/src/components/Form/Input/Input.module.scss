@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .Input {
   display: flex;
   flex-flow: column;
@@ -21,5 +23,10 @@
     box-sizing: border-box;
     background: #e0e0e0;
     outline: none;
+
+    &.Error {
+      border: 2px solid $default-red;
+      color: $default-red;
+    }
   }
 }
