@@ -1,0 +1,53 @@
+@import '../../variables.scss';
+
+
+// TODO: Responsivo
+.LoginPage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  >.SidePanel {
+    width: 25vw;
+    height: 100%;
+    background-color: $default-green;
+  }
+
+  >.LoginContent {
+    width: 75vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >.LoginFormContainer {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      width: 500px;
+
+      >* {
+        margin-bottom: 20px;
+      }
+
+      >.ErrorMessage {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        margin-top: -5px;
+        color: $default-red;
+        font-size: 13px;
+
+        >.Icon {
+          font-size: 15px;
+          margin-right: .5rem;
+        }
+      }
+
+      >.Signup {
+        font-size: 13px;
+        margin: 0;
+      }
+    }
+  }
+}
