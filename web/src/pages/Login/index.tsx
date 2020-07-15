@@ -1,5 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 
+import { FiXCircle } from 'react-icons/fi';
+
 import Input from '../../components/Form/Input';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
@@ -8,41 +10,49 @@ import axios from '../../axios';
 import classes from './Login.module.scss';
 
 const Login = (props: any) => {
-  const [email, setEmailState] = useState('');
-  const [password, setPasswordState] = useState('');
-  const [loading, setLoadingState] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const onSubmitLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoadingState(true);
+    setLoading(true);
 
-    axios.post('/auth/login', {email, password})
+    axios.post('/auth/login', { email, password })
       .then((loginResponse) => {
-        setLoadingState(false);
+        setLoading(false);
         localStorage.setItem('token', loginResponse.data.token);
         props.history.push('/');
       })
-      .catch(() => {
-        setLoadingState(false);
-        //TODO: tratar o caso de erro de senha/email + inputs errados + tratar inputs faltando
-        console.log('errado');
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setLoginError(true);
       });
   }
 
   const loginFormContainer =
     <form className={classes.LoginFormContainer} onSubmit={onSubmitLogin}>
       <h2>Login</h2>
-      <Input type='text'
+      <Input type='email'
         label='E-mail'
         placeholder='gardener@email.com'
         value={email}
-        onChange={(event) => setEmailState(event.target.value)} />
+        onChange={(event) => setEmail(event.target.value)}
+        required />
       <Input type='password'
         label='Senha'
         placeholder='Digite sua senha'
         value={password}
-        onChange={(event) => setPasswordState(event.target.value)} />
-      <Button btnStyle='primary' loading={loading}>Entrar</Button>
+        onChange={(event) => setPassword(event.target.value)}
+        required />
+      {loginError ?
+        <p className={classes.ErrorMessage}>
+          <FiXCircle className={classes.Icon} /> E-mail ou senha incorretos
+        </p>:
+      null}
+      <Button btnStyle='primary' loading={loading} disabled={loading}>Entrar</Button>
       <p className={classes.Signup}>Não tem cadastro? <Link to='/'>Cadastre-se</Link></p>
     </form>;
 

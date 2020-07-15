@@ -30,6 +30,20 @@
         margin-bottom: 20px;
       }
 
+      >.ErrorMessage {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        margin-top: -5px;
+        color: $default-red;
+        font-size: 13px;
+
+        >.Icon {
+          font-size: 15px;
+          margin-right: .5rem;
+        }
+      }
+
       >.Signup {
         font-size: 13px;
         margin: 0;
