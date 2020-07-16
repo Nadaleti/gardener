@@ -4,7 +4,7 @@ import Header from './Header';
 
 import classes from './LoggedArea.module.scss';
 
-const LoggedArea = () => {
+const LoggedAreaLayout = () => {
   return (
     <div className={classes.BasePage}>
       <Header />
@@ -13,4 +13,4 @@ const LoggedArea = () => {
   )
 }
 
-export default LoggedArea;
+export default LoggedAreaLayout;

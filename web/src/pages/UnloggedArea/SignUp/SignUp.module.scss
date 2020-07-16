@@ -1,0 +1,23 @@
+@import "../../../variables.scss";
+
+// TODO: Responsivo
+.SignUpFormContainer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 600px;
+
+  > * {
+    margin-bottom: 20px;
+  }
+
+  >.FormButtons {
+    display: flex;
+    justify-content: center;
+    width: 1;
+
+    >button:first-child {
+      margin-right: 10px;
+    }
+  }
+}
