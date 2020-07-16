@@ -32,9 +32,9 @@ const Login = (props: any) => {
       });
   }
 
-  const loginFormContainer =
+  return (
     <form className={classes.LoginFormContainer} onSubmit={onSubmitLogin}>
-      <h2>Login</h2>
+      <h1>Login</h1>
       <Input type='email'
         label='E-mail'
         placeholder='gardener@email.com'
@@ -53,16 +53,8 @@ const Login = (props: any) => {
         </p>:
       null}
       <Button btnStyle='primary' loading={loading} disabled={loading}>Entrar</Button>
-      <p className={classes.Signup}>Não tem cadastro? <Link to='/'>Cadastre-se</Link></p>
-    </form>;
-
-  return (
-    <div className={classes.LoginPage}>
-      <div className={classes.SidePanel}></div>
-      <div className={classes.LoginContent}>
-        {loginFormContainer}
-      </div>
-    </div>
+      <p className={classes.Signup}>Não tem cadastro? <Link to='/cadastro'>Cadastre-se</Link></p>
+    </form>
   )
 }
 

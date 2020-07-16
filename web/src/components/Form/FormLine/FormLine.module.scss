@@ -1,6 +1,7 @@
 .FormLine {
   display: flex;
   flex-flow: row;
+  width: 100%;
 
   >* {
     flex: 1;

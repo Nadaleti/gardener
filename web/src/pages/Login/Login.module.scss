@@ -1,53 +1,32 @@
-@import '../../variables.scss';
-
+@import "../../variables.scss";
 
 // TODO: Responsivo
-.LoginPage {
-  width: 100vw;
-  height: 100vh;
+.LoginFormContainer {
   display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 500px;
 
-  >.SidePanel {
-    width: 25vw;
-    height: 100%;
-    background-color: $default-green;
+  > * {
+    margin-bottom: 20px;
   }
 
-  >.LoginContent {
-    width: 75vw;
-    height: 100%;
+  > .ErrorMessage {
     display: flex;
-    justify-content: center;
     align-items: center;
+    margin-right: auto;
+    margin-top: -5px;
+    color: $default-red;
+    font-size: 13px;
 
-    >.LoginFormContainer {
-      display: flex;
-      flex-flow: column;
-      align-items: center;
-      width: 500px;
-
-      >* {
-        margin-bottom: 20px;
-      }
-
-      >.ErrorMessage {
-        display: flex;
-        align-items: center;
-        margin-right: auto;
-        margin-top: -5px;
-        color: $default-red;
-        font-size: 13px;
-
-        >.Icon {
-          font-size: 15px;
-          margin-right: .5rem;
-        }
-      }
-
-      >.Signup {
-        font-size: 13px;
-        margin: 0;
-      }
+    > .Icon {
+      font-size: 15px;
+      margin-right: 0.5rem;
     }
+  }
+
+  > .Signup {
+    font-size: 13px;
+    margin: 0;
   }
 }

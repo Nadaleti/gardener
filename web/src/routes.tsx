@@ -5,12 +5,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import AuthenticatedRoute from './authenticated-route';
 
 import LoggedArea from './pages/LoggedArea';
-import Login from './pages/Login';
+import UnloggedArea from './pages/UnloggedArea';
 
 const Routes = () => {
   return (
     <BrowserRouter>
-      <Route path='/login' component={Login} exact />
+      <Route path='/' component={UnloggedArea} />
       <AuthenticatedRoute path='/' component={LoggedArea} />
     </BrowserRouter>
   )
