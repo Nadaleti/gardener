@@ -20,7 +20,7 @@ const Login = (props: any) => {
     if (localStorage.getItem('token')) {
       props.history.push('/');
     }
-  }, []);
+  }, [props.history]);
 
   const onSubmitLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

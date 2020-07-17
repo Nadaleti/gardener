@@ -25,7 +25,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
       return;
     }
 
-    if (props.type === 'email') {
+    if (props.type === 'email' && value !== '') {
       setInputError(!isEmail(value));
       return;
     }
