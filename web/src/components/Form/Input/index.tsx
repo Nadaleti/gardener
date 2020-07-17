@@ -3,13 +3,14 @@ import React, { FunctionComponent, useState } from 'react';
 import classes from './Input.module.scss';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string
+  label?: string;
+  hasError?: boolean;
 }
 
 const Input: FunctionComponent<InputProps> = (props) => {
   const [inputError, setInputError] = useState(false);
 
-  const {onBlur, inputFieldProps} = [props].map(({label, onBlur, ...rest}) => {
+  const {onBlur, inputFieldProps} = [props].map(({label, hasError, onBlur, ...rest}) => {
     return {onBlur, inputFieldProps: rest}
   })[0];
   const inputFieldClasses = [classes.InputField];
@@ -43,10 +44,11 @@ const Input: FunctionComponent<InputProps> = (props) => {
       firstAtPos === lastAtPos &&
       lastAtPos < lastDotPos &&
       lastAtPos > 0 && lastDotPos > 0 &&
+      lastDotPos < email.length - 1 &&
       lastDotPos - lastAtPos > 1;
   }
 
-  if (inputError) inputFieldClasses.push(classes.Error);
+  if (props.hasError || inputError) inputFieldClasses.push(classes.Error);
 
   return (
     <div className={classes.Input}>

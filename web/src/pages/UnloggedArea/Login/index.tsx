@@ -46,13 +46,11 @@ const Login = (props: any) => {
         <Input type='email'
           label='E-mail'
           placeholder='gardener@email.com'
-          value={email}
           onChange={(event) => setEmail(event.target.value)}
           required />
         <Input type='password'
           label='Senha'
           placeholder='Digite sua senha'
-          value={password}
           onChange={(event) => setPassword(event.target.value)}
           required />
         {loginError ?
