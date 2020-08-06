@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import Button from '../../../components/Button';
-import Input from '../../../components/Form/Input';
-import FormLine from '../../../components/Form/FormLine';
-import Select from '../../../components/Form/Select';
-import UnloggedAreaLayout from '..';
 import axios from '../../../axios';
+import Button from '../../../components/Button';
+import { FIELD_TYPES } from '../../../components/Form/FieldTypes.enum';
+import Field from '../../../components/Form/Field';
+import Form from '../../../components/Form';
+import FormLine from '../../../components/Form/FormLine';
+import UnloggedAreaLayout from '..';
 
 import classes from './SignUp.module.scss';
 
@@ -17,20 +18,108 @@ interface UF {
 const DEFAULT_OPTION_VALUE = '';
 
 const SignUp = (props: any) => {
-  const [ufs, setUfs] = useState<UF[]>([]);
-  const [cities, setCities] = useState<string[]>([]);
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [isPasswordValid, setPasswordValid] = useState(true);
-  const [isPasswordEqual, setPasswordEqual] = useState(true);
-
-  const [signupData, setSignupData] = useState({
-    name: '',
-    gender: '',
-    selectedUf: DEFAULT_OPTION_VALUE,
-    selectedCity: DEFAULT_OPTION_VALUE,
-    email: '',
-    password: ''
-  });
+  const [formFields, setFormFields] = useState([
+    {
+      name: 'name',
+      fieldType: FIELD_TYPES.INPUT,
+      label: 'Nome Completo',
+      config: {
+        type: 'text',
+        placeholder: 'Margarida Flores',
+        required: true
+      },
+      validation: {
+        required: true
+      },
+      submitted: false,
+      valid: true,
+      value: ''
+    },
+    {
+      name: 'gender',
+      fieldType: FIELD_TYPES.INPUT,
+      label: 'Sexo',
+      config: {
+        type: 'text',
+        required: true
+      },
+      submitted: true,
+      validation: {},
+      valid: true,
+      value: ''
+    },
+    {
+      name: 'uf',
+      fieldType: FIELD_TYPES.SELECT,
+      label: 'Estado',
+      config: {
+        options: [],
+        defaultOptionValue: DEFAULT_OPTION_VALUE,
+        defaultOptionText: 'Selecione seu estado',
+        required: true,
+        disabled: true
+      },
+      validation: {
+        required: true
+      },
+      submitted: false,
+      valid: true,
+      value: DEFAULT_OPTION_VALUE
+    },
+    {
+      name: 'city',
+      fieldType: FIELD_TYPES.SELECT,
+      label: 'Cidade',
+      config: {
+        options: [],
+        defaultOptionValue: DEFAULT_OPTION_VALUE,
+        defaultOptionText: 'Selecione sua cidade',
+        required: true,
+        disabled: true
+      },
+      validation: {
+        required: true
+      },
+      submitted: false,
+      valid: true,
+      value: ''
+    },
+    {
+      name: 'email',
+      fieldType: FIELD_TYPES.INPUT,
+      label: 'E-mail',
+      config: {
+        type: 'email',
+        placeholder: 'gardener@email.com',
+        required: true
+      },
+      validation: {
+        required: true,
+        isEmail: true
+      },
+      submitted: false,
+      valid: true,
+      value: ''
+    },
+    {
+      name: 'password',
+      fieldType: FIELD_TYPES.INPUT,
+      label: 'Senha',
+      config: {
+        type: 'password',
+        placeholder: 'Digite sua senha',
+        minLength: 8,
+        required: true
+      },
+      validation: {
+        minLength: 8,
+        required: true
+      },
+      submitted: false,
+      valid: true,
+      value: ''
+    }
+  ]);
 
   const [loading, setLoading] = useState(false);
 
@@ -46,127 +135,87 @@ const SignUp = (props: any) => {
           let textA = a.name.toUpperCase();
           let textB = b.name.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        })
-        setUfs(ufs);
+        });
+
+        const newFormFields = [...formFields];
+        const newField = { ...newFormFields[2] };
+        const newConfig = { ...newField.config };
+
+        newConfig.options = ufs.map((uf: UF) => { return { value: uf.uf, name: uf.name } });
+        newConfig.disabled = ufs.length === 0;
+
+        newField.config = newConfig;
+        newFormFields[2] = newField;
+
+        setFormFields(newFormFields);
       })
       .catch((error) => console.log(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.history]);
 
+  const selectedUf = formFields[2].value;
+
   useEffect(() => {
-    if (signupData.selectedUf !== DEFAULT_OPTION_VALUE) {
-      axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${signupData.selectedUf}/municipios`)
+    const newFormFields = [...formFields];
+    const newField = { ...newFormFields[3] };
+    const newConfig = { ...newField.config };
+    newField.value = DEFAULT_OPTION_VALUE;
+
+    if (selectedUf !== DEFAULT_OPTION_VALUE) {
+      axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
         .then((response) => {
           const cities = response.data.map((city: any) => city.nome).sort();
-          setCities(cities);
+
+          newConfig.options = cities.map((city: string) => { return { value: city, name: city } });
+          newConfig.disabled = cities.length === 0;
+
+          newField.config = newConfig;
+          newFormFields[3] = newField;
+
+          setFormFields(newFormFields);
         })
         .catch((error) => console.log(error));
+    } else {
+      newConfig.options = [];
+      newConfig.disabled = true;
+
+      newField.config = newConfig;
+      newFormFields[3] = newField;
+
+      setFormFields(newFormFields);
     }
-  }, [signupData.selectedUf]);
-
-  const selectUfHandler = (uf: string) => {
-    setSignupData({
-      ...signupData,
-      selectedUf: uf,
-      selectedCity: DEFAULT_OPTION_VALUE
-    });
-    setCities([]);
-  }
-
-  const passwordChangeHandler = (value: string) => {
-    setSignupDataValue(value, 'password');
-    verifyPasswordValidity(value);
-    verifyPasswordEquality(value, passwordConfirmation);
-  }
-
-  const passwordConfirmationChangeHandler = (value: string) => {
-    setPasswordConfirmation(value);
-    verifyPasswordEquality(signupData.password, value);
-  }
-  
-  const setSignupDataValue = (value: any, field: string) => {
-    setSignupData({...signupData, [field]: value});
-  }
-
-  const verifyPasswordEquality = (password: string, passwordConfirmation: string) => {
-    setPasswordEqual(passwordConfirmation === '' || password === passwordConfirmation);
-  }
-
-  const verifyPasswordValidity = (password: string) => {
-    setPasswordValid(password.length >= 8);
-  }
-
-  const getErrorMessage = () => {
-    let errorMessage = '';
-    if (!isPasswordValid) errorMessage = '* A senha deve ter no mínimo 8 caracteres';
-    else if (!isPasswordEqual) errorMessage = '* A senha e a confirmação de senha devem ser iguais';
-    else return null;
-
-    return <p className={classes.PasswordErrorMessage}>{errorMessage}</p>;
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedUf]);
 
   return (
     <UnloggedAreaLayout>
-      <form className={classes.SignUpFormContainer}>
-        <h1>Cadastro</h1>
-        <Input
-          label='Nome Completo'
-          type='text'
-          placeholder='Margarida Flores'
-          required
-          onChange={(event) => setSignupDataValue(event.target.value, 'name')} />
-        {/* TODO: Radio button */}
-        <Input label='Gênero' type='text' />
-        <FormLine>
-          <Select
-            label='Estado'
-            defaultOptionValue={DEFAULT_OPTION_VALUE}
-            defaultOptionText='Escolha seu estado'
-            onChange={(event) => selectUfHandler(event.target.value)}
-            value={signupData.selectedUf}
-            required
-          >
-            {ufs.map((uf) => <option key={uf.uf} value={uf.uf}>{uf.name}</option>)}
-          </Select>
-          <Select
-            label='Cidade'
-            defaultOptionValue={DEFAULT_OPTION_VALUE}
-            defaultOptionText='Escolha sua cidade'
-            onChange={(event) => setSignupDataValue(event.target.value, 'selectedCity')}
-            value={signupData.selectedCity}
-            disabled={signupData.selectedUf === DEFAULT_OPTION_VALUE}
-            required
-          >
-            {cities.map((city) => <option key={city} value={city}>{city}</option>)}
-          </Select>
-        </FormLine>
-        <Input
-          label='E-mail'
-          type='email'
-          placeholder='gardener@email.com'
-          required
-          onChange={(event) => setSignupDataValue(event.target.value, 'email')} />
-        <FormLine>
-          <Input
-            label='Senha'
-            type='password'
-            placeholder='Digite sua senha'
-            hasError={!isPasswordValid || !isPasswordEqual}
-            required
-            onChange={(event) => passwordChangeHandler(event.target.value)} />
-          <Input
-            label='Confirmação de Senha'
-            type='password'
-            placeholder='Digite a mesma senha'
-            hasError={!isPasswordEqual}
-            required
-            onChange={(event) => passwordConfirmationChangeHandler(event.target.value)} />
-        </FormLine>
-        {getErrorMessage()}
-        <div className={classes.FormButtons}>
-          <Button btnStyle='secondary' type='button'>Cancelar</Button>
-          <Button btnStyle='primary' type='submit' loading={loading} disabled={loading}>Cadastrar</Button>
-        </div>
-      </form>
+      <Form
+        fields={formFields}
+        setFields={setFormFields}
+        className={classes.SignUpFormContainer}
+        onSubmit={() => { }}
+      >
+        {(setValue: Function) => {
+          return (
+            <>
+              <h1>Cadastro</h1>
+              <Field field={formFields[0]} onChange={(event: any) => setValue(formFields[0].name, event.target.value)} />
+              <Field field={formFields[1]} onChange={(event: any) => setValue(formFields[1].name, event.target.value)} />
+              <FormLine>
+                {formFields.slice(2, 4).map((field: any) =>
+                  <Field key={field.name} field={field} onChange={(event: any) => setValue(field.name, event.target.value)} />)}
+              </FormLine>
+              {formFields.slice(4, 6).map((field: any) =>
+                <Field key={field.name} field={field} onChange={(event: any) => setValue(field.name, event.target.value)} />)}
+
+              <div className={classes.FormButtons}>
+                <Button btnStyle='secondary' type='button'>Cancelar</Button>
+                <Button btnStyle='primary' type='submit' loading={loading} disabled={loading}>Cadastrar</Button>
+              </div>
+            </>
+          )
+        }}
+      </Form>
     </UnloggedAreaLayout>
   )
 }
