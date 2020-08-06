@@ -3,40 +3,30 @@ import React, { FunctionComponent, useState } from 'react';
 import classes from './Select.module.scss';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  defaultOptionValue: string,
-  defaultOptionText: string,
-  label?: string
+  defaultOptionValue?: string,
+  defaultOptionText?: string,
+  label?: string,
+  touched?: boolean;
+  submitted?: boolean;
+  invalid: boolean;
+  validation: any;
 }
 
 const Select: FunctionComponent<SelectProps> = (props) => {
-  const [selectError, setSelectError] = useState(false);
-
-  const {onBlur, selectFieldProps} = [props].map(({label, defaultOptionValue, defaultOptionText, onBlur, ...rest}) => {
-    return {onBlur, selectFieldProps: rest}
+  const {selectFieldProps} = [props].map(({label, defaultOptionValue, defaultOptionText, touched, submitted, invalid, validation, ...rest}) => {
+    return {selectFieldProps: rest}
   })[0];
 
   const selectFieldClasses = [classes.SelectField];
 
-  const onSelectBlur = (event: React.FocusEvent<HTMLSelectElement>) => {
-    if (onBlur) onBlur(event);
-    verifyError(event.target.value);
+  if ((props.touched !== undefined && props.touched) || (props.submitted !== undefined && props.submitted)) {
+    if (props.validation && props.invalid) selectFieldClasses.push(classes.Error);
   }
-
-  const verifyError = (value: string) => {
-    if (props.required && value === props.defaultOptionValue) {
-      setSelectError(true);
-      return;
-    }
-
-    setSelectError(false);
-  }
-
-  if (selectError) selectFieldClasses.push(classes.Error);
 
   return (
     <div className={classes.Select}>
       {props.label ? <label>{props.label}{props.required ? '*' : null}</label> : null}
-      <select className={selectFieldClasses.join(' ')} onBlur={onSelectBlur} {...selectFieldProps}>
+      <select className={selectFieldClasses.join(' ')} {...selectFieldProps}>
         <option value={props.defaultOptionValue}>{props.defaultOptionText}</option>
         {props.children}
       </select>
