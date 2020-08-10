@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import md5 from 'md5';
+
 import axios from '../../../axios';
 import Button from '../../../components/Button';
 import { FIELD_TYPES } from '../../../components/Form/FieldTypes.enum';
@@ -9,6 +13,7 @@ import FormLine from '../../../components/Form/FormLine';
 import UnloggedAreaLayout from '..';
 
 import classes from './SignUp.module.scss';
+import { AxiosError } from 'axios';
 
 interface UF {
   uf: string;
@@ -37,16 +42,26 @@ const SignUp = (props: any) => {
     },
     {
       name: 'gender',
-      fieldType: FIELD_TYPES.INPUT,
+      fieldType: FIELD_TYPES.RADIO,
       label: 'Sexo',
       config: {
+        options: [
+          {
+            name: 'Masculino',
+            value: 'MALE'
+          },
+          {
+            name: 'Feminino',
+            value: 'FEMALE'
+          }
+        ],
         type: 'text',
         required: true
       },
       submitted: true,
       validation: {},
       valid: true,
-      value: ''
+      value: 'MALE'
     },
     {
       name: 'uf',
@@ -187,20 +202,58 @@ const SignUp = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUf]);
 
+  const submitSignup = (values: {name: string, value: string}[]) => {
+    setLoading(true);
+
+    let body: {[key: string]: string} = {};
+    values.forEach((value) => body[value.name] = value.value);
+    body.password = md5(body.password);
+
+    axios.post('/auth/register', body)
+      .then(() => {
+        setLoading(false);
+        props.history.push('/login');
+        toast.success('✔️ Cadastro realizado com sucesso!', {
+          position: 'top-right',
+          autoClose: 4000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+      })
+      .catch((error: AxiosError) => {
+        let message = '❌ Erro ao realizar cadastro, tente novamente mais tarde';
+        if (error.response) {
+          console.log(error.response.data);
+          message = '❌ ' + error.response.data.message;
+        }
+        toast.error(message, {
+          position: 'top-right',
+          autoClose: 4000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+        setLoading(false);
+      });
+  }
+
   return (
     <UnloggedAreaLayout>
       <Form
         fields={formFields}
         setFields={setFormFields}
         className={classes.SignUpFormContainer}
-        onSubmit={() => { }}
+        onSubmit={submitSignup}
       >
         {(setValue: Function) => {
           return (
             <>
               <h1>Cadastro</h1>
               <Field field={formFields[0]} onChange={(event: any) => setValue(formFields[0].name, event.target.value)} />
-              <Field field={formFields[1]} onChange={(event: any) => setValue(formFields[1].name, event.target.value)} />
+              <Field field={formFields[1]} onChange={(value: string) => setValue(formFields[1].name, value)} />
               <FormLine>
                 {formFields.slice(2, 4).map((field: any) =>
                   <Field key={field.name} field={field} onChange={(event: any) => setValue(field.name, event.target.value)} />)}
@@ -209,8 +262,20 @@ const SignUp = (props: any) => {
                 <Field key={field.name} field={field} onChange={(event: any) => setValue(field.name, event.target.value)} />)}
 
               <div className={classes.FormButtons}>
-                <Button btnStyle='secondary' type='button'>Cancelar</Button>
-                <Button btnStyle='primary' type='submit' loading={loading} disabled={loading}>Cadastrar</Button>
+                <Button
+                  btnStyle='secondary'
+                  type='button'
+                  disabled={loading}
+                  onClick={() => props.history.push('/login')}>
+                    Cancelar
+                </Button>
+                <Button
+                  btnStyle='primary'
+                  type='submit'
+                  loading={loading}
+                  disabled={loading}>
+                    Cadastrar
+                </Button>
               </div>
             </>
           )

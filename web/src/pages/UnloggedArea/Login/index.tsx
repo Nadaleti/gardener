@@ -1,6 +1,7 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FiXCircle } from 'react-icons/fi';
+import md5 from 'md5';
 
 import Button from '../../../components/Button';
 import Form from '../../../components/Form';
@@ -63,6 +64,7 @@ const Login = (props: any) => {
 
     const loginBody: { [key: string]: string } = {};
     values.forEach((value: any) => loginBody[value.name] = value.value);
+    loginBody.password = md5(loginBody.password);
 
     axios.post('/auth/login', loginBody)
       .then((loginResponse) => {
