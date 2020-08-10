@@ -35,9 +35,14 @@
     background-color: transparent;
     color: $default-green;
     
-    &:hover {
+    &:hover & :not(:disabled) {
       background-color: $default-green;
       color: #ffffff;
+    }
+
+    &:disabled {
+      border-color: rgba($default-green, .7);
+      cursor: not-allowed;
     }
   }
 }
