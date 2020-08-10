@@ -13,7 +13,7 @@ class AuthService {
       .findByEmail(email);
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      throw new APIError('Invalid e-mail or password', 400);
+      throw new APIError('Email ou senha inválidos', 400);
     }
 
     return new JWTService().generateAccessToken(user.id);
@@ -23,7 +23,6 @@ class AuthService {
     this.validateRegistration(registration);
     await this.validateEmail(registration.email)
       .catch((error) => Promise.reject(error));
-    this.validatePassword(registration.password, registration.passwordConfirmation);
 
     const user = new User();
     user.name = registration.name;
@@ -38,15 +37,8 @@ class AuthService {
 
   private validateRegistration(registration: RegistrationRequest) {
     if (!registration.name || !registration.gender ||
-      !registration.email || !registration.password ||
-      !registration.passwordConfirmation) {
-      throw new APIError('Some of the required fields are\'t filled', 400);
-    }
-  }
-
-  private validatePassword(password: string, passwordConfirmation: string) {
-    if (password !== passwordConfirmation) {
-      throw new APIError('Password and password confirmation doesn\'t match', 400);
+      !registration.email || !registration.password) {
+      throw new APIError('Um ou mais campos não foram preenchidos', 400);
     }
   }
 
@@ -55,7 +47,7 @@ class AuthService {
       .findByEmail(email);
 
     if (matchedUser) {
-      throw new APIError('E-mail is already in use', 400);
+      throw new APIError('E-mail já está em uso', 400);
     }
   }
 }
