@@ -81,13 +81,6 @@ const Form = (props: FormProps) => {
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    const values = props.fields.map((field: Field) => {
-      return {
-        name: field.name,
-        value: field.value
-      }
-    });
-
     if (!submitted) {
       setSubmitted(true);
 
@@ -105,6 +98,18 @@ const Form = (props: FormProps) => {
 
       props.setFields(newFields);
     }
+
+    let isFormValid = true;
+    props.fields.forEach((field: Field) => isFormValid = isFormValid && field.valid);
+
+    if (!isFormValid) return;
+
+    const values = props.fields.map((field: Field) => {
+      return {
+        name: field.name,
+        value: field.value
+      }
+    });
 
     props.onSubmit(values);
   }

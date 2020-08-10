@@ -3,6 +3,7 @@ import React from 'react';
 import { FIELD_TYPES } from '../FieldTypes.enum';
 import Input from '../Input';
 import Select from '../Select';
+import Radio from '../Radio';
 
 interface Field {
   fieldType: FIELD_TYPES;
@@ -53,6 +54,16 @@ const Field = (props: FieldProps) => {
             <option key={option.value} value={option.value}>{option.name}</option>
           )}
         </Select>
+        break;
+
+      case FIELD_TYPES.RADIO:
+        fieldElement = <Radio
+          label={props.field.label}
+          name={props.field.name}
+          value={props.field.value}
+          optionChange={props.onChange}
+          {...props.field.config}
+        />
         break;
 
       default:
