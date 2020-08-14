@@ -29,8 +29,6 @@ const PlantCard: FunctionComponent<PlantCardProps> = (props) => {
         </header>
         <div className={classes.MoreInfoPanel}>
           <hr style={{ width: '100%', border: 0, borderTop: '1px solid #dddddd', margin: '2px 0' }} />
-          {/* TODO: Location: get icon + text */}
-          {/* TODO: PlantType: use props */}
           <span className={classes.AdditionalInfo}>
             <img src='http://localhost:3333/uploads/location.svg' alt='Location icon' className={classes.Icon} />
             {props.location}
