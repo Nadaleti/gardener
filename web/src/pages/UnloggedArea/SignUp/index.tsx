@@ -139,10 +139,6 @@ const SignUp = (props: any) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      props.history.push('/');
-    }
-
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
       .then((response) => {
         const ufs = response.data.map((uf: any) => { return { uf: uf.sigla, name: uf.nome } });

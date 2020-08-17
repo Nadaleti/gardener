@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { loginAction } from '../../../store/reducers/session';
+import { Link } from 'react-router-dom';
 
 import { FiXCircle } from 'react-icons/fi';
 import md5 from 'md5';
@@ -7,7 +10,6 @@ import Button from '../../../components/Button';
 import Form from '../../../components/Form';
 import { FIELD_TYPES } from '../../../components/Form/FieldTypes.enum';
 import Field from '../../../components/Form/Field';
-import { Link } from 'react-router-dom';
 import UnloggedAreaLayout from '..';
 import axios from '../../../axios';
 
@@ -53,12 +55,6 @@ const Login = (props: any) => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      props.history.push('/');
-    }
-  }, [props.history]);
-
   const onSubmitLogin = (values: []) => {
     setLoading(true);
 
@@ -69,7 +65,7 @@ const Login = (props: any) => {
     axios.post('/auth/login', loginBody)
       .then((loginResponse) => {
         setLoading(false);
-        localStorage.setItem('token', loginResponse.data.token);
+        props.onLogin(loginResponse.data.token);
         props.history.push('/');
       })
       .catch((error) => {
@@ -109,4 +105,10 @@ const Login = (props: any) => {
   )
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onLogin: (token: string) => dispatch(loginAction(token))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Login);
