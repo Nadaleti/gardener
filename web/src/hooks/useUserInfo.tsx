@@ -1,8 +1,9 @@
 import jwtDecode from 'jwt-decode';
+import store from '../store';
 
 function useUserInfo(){
   const getUserId = () => {
-    const token = localStorage.getItem('token');
+    const token = store.getState().token;
 
     if (!token) return;
 
