@@ -34,7 +34,7 @@ const PlantCard: FunctionComponent<PlantCardProps> = (props) => {
             {props.location}
           </span>
           <span className={classes.AdditionalInfo}>
-            <img src={props.plantType.iconPath} alt={props.plantType.name} className={classes.Icon} />
+            <img src={`http://localhost:3333${props.plantType.iconPath}`} alt={props.plantType.name} className={classes.Icon} />
             {props.plantType.name}
           </span>
         </div>

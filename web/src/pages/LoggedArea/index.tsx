@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import Header from './Header';
+import LoggedAreaRoutes from './routes';
 
 import classes from './LoggedArea.module.scss';
 
@@ -24,7 +25,9 @@ const LoggedArea = (props: LoggedAreaProps) => {
   return (
     <div className={classes.BasePage}>
       <Header />
-      Logged area
+      <section className={classes.Content}>
+        <LoggedAreaRoutes />
+      </section>
     </div>
   )
 }
