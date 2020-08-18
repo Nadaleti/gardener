@@ -15,8 +15,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type RouteProps = PropsFromRedux & {
   path: string;
-  component: Function;
-}
+  render: Function;
+};
 
 const AuthenticatedRoute = (props: RouteProps) => {
   const isAuthenticated = () => {
@@ -32,7 +32,7 @@ const AuthenticatedRoute = (props: RouteProps) => {
 
   const getComponentToRender = () => {
     if (isAuthenticated()) {
-      return props.component();
+      return props.render();
     } else {
       props.logout();
       return <Redirect to='/login' />

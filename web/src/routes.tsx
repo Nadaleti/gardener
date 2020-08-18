@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, RouteComponentProps } from 'react-router-dom';
 
 import AuthenticatedRoute from './authenticated-route';
 
@@ -13,7 +13,7 @@ const Routes = () => {
     <BrowserRouter>
       <Route path='/login' component={Login} exact />
       <Route path='/cadastro' component={SignUp} exact />
-      <AuthenticatedRoute path='/' component={LoggedArea} />
+      <AuthenticatedRoute path='/' render={(props: RouteComponentProps) => <LoggedArea {...props} />} />
     </BrowserRouter>
   )
 }
