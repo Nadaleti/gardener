@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ConnectedProps, connect } from 'react-redux';
+import { AxiosResponse, AxiosError } from 'axios';
 
 import GardenerFemale from '../../../../assets/gardener-f.svg';
 import GardenerMale from '../../../../assets/gardener-m.svg';
 
-import classes from './UserInfo.module.scss';
-import { ConnectedProps, connect } from 'react-redux';
 import { logoutAction, addUserInfoAction } from '../../../../store/reducers/session';
 import useUserInfo from '../../../../hooks/useUserInfo';
 import axios from '../../../../axios';
-import { AxiosResponse, AxiosError } from 'axios';
+
+import classes from './UserInfo.module.scss';
 
 interface UserInfo {
   name: string;
