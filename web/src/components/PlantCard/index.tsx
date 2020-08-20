@@ -1,6 +1,7 @@
 import React, { useState, FunctionComponent } from 'react';
-
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
+
+import plantTypeImageMapper from './plantTypeImageMapper';
 
 import classes from './PlantCard.module.scss';
 
@@ -19,7 +20,7 @@ const PlantCard: FunctionComponent<PlantCardProps> = (props) => {
   return (
     <div className={cardClasses.join(' ')}>
       <div className={classes.PlantImage}
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519567770579-c2fc5436bcf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500')", backgroundSize: '100%' }}></div>
+        style={{ backgroundImage: `url('${plantTypeImageMapper.get(props.plantType.name)}')`, backgroundSize: '100%' }}></div>
       <div className={classes.PlantInfo} onClick={() => setOpened(!opened)}>
         <header className={classes.Info}>
           <h3>{props.title}</h3>

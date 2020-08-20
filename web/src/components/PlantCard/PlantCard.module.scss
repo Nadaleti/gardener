@@ -3,6 +3,9 @@
   width: 370px;
   max-height: 220px;
   overflow: hidden;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
+  box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
   transition: ease-in-out 0.3s;
 
   > .PlantImage {
@@ -34,7 +37,7 @@
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
 
-      >.AdditionalInfo {
+      > .AdditionalInfo {
         display: flex;
         align-items: center;
         margin-top: 10px;
