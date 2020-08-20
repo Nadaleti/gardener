@@ -11,6 +11,7 @@ interface PlantCardProps {
   location: string;
 }
 
+// TODO: Pegar imagem com URL dinamica (remover localhost hardcoded)
 const PlantCard: FunctionComponent<PlantCardProps> = (props) => {
   const [opened, setOpened] = useState(false);
 
