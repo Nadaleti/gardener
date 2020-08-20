@@ -1,0 +1,14 @@
+//TODO: Responsivo
+.PageTitle {
+  font-size: 30px;
+  margin: 20px 0 35px;
+  font-weight: bold;
+}
+
+.PlantCardList {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+}

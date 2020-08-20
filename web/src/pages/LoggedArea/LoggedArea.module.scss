@@ -1,4 +1,13 @@
 .BasePage {
   min-width: 100%;
   min-height: 100%;
+
+  > .Content {
+    display: flex;
+    flex-flow: column;
+    width: 65%;
+    margin: 0 auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+  }
 }

@@ -1,0 +1,61 @@
+.PlantCard {
+  border-radius: 15px;
+  width: 370px;
+  max-height: 220px;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
+  box-shadow: 0px 2px 5px 0px rgba(136, 136, 136, 1);
+  transition: ease-in-out 0.3s;
+
+  > .PlantImage {
+    height: 160px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  > .PlantInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #ffffff;
+    cursor: pointer;
+
+    > .Info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    > .MoreInfoPanel {
+      display: flex;
+      flex-direction: column;
+      height: 100px;
+      background-color: #fff;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+
+      > .AdditionalInfo {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .Icon {
+        width: 30px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.Opened {
+  max-height: 350px;
+
+  .PlantInfo {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
