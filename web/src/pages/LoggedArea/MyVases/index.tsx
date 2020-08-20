@@ -41,7 +41,6 @@ const MyVases = (props: RouteComponentProps) => {
   return (
     <>
       <h1 className={classes.PageTitle}>Meus vasos</h1>
-      <hr />
       <div className={classes.PlantCardList}>
         {vases.map((vase: Vase) =>
           <PlantCard key={vase.id} title={vase.name} location={vase.location} plantType={vase.plantType} />)}
