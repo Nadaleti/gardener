@@ -1,8 +1,11 @@
 .BasePage {
-  min-width: 100%;
-  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+  min-width: 100vw;
+  min-height: 100vh;
 
   > .Content {
+    flex: 1;
     display: flex;
     flex-flow: column;
     width: 65%;
