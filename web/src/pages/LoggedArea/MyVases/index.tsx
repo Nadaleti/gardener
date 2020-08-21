@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 
 import axios from '../../../axios';
 import useUserInfo from '../../../hooks/useUserInfo';
@@ -7,6 +7,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import PlantCard from '../../../components/PlantCard';
 
 import classes from './MyVases.module.scss';
+import Button from '../../../components/Button';
 
 interface Vase {
   id: number;
@@ -40,7 +41,12 @@ const MyVases = (props: RouteComponentProps) => {
 
   return (
     <>
-      <h1 className={classes.PageTitle}>Meus vasos</h1>
+      <div className={classes.TitleContainer}>
+        <h1 className={classes.PageTitle}>Meus vasos</h1>
+        <Link to='/vasos/novo' className={classes.ButtonContent}>
+          <Button btnStyle='primary'>Criar Vaso</Button>
+        </Link>
+      </div>
       <div className={classes.PlantCardList}>
         {vases.map((vase: Vase) =>
           <PlantCard key={vase.id} title={vase.name} location={vase.location} plantType={vase.plantType} />)}

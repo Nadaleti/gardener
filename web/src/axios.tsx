@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
 );
 
 const isAuthenticatedUrl = (url: string) => {
-  return !url.includes('/uploads') && !url.includes('/login') && !url.includes('/register');
+  return !url.includes('/uploads') && !url.includes('/login') && !url.includes('/register') && !url.includes('/plant-type');
 }
 
 export default axiosInstance;

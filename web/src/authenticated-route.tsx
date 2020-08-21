@@ -15,6 +15,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type RouteProps = PropsFromRedux & {
   path: string;
+  exact?: boolean;
   render: Function;
 };
 
@@ -40,7 +41,7 @@ const AuthenticatedRoute = (props: RouteProps) => {
   }
 
   return (
-    <Route path={props.path} render={(routeProps: RouteComponentProps) => getComponentToRender(routeProps)} />
+    <Route path={props.path} exact={props.exact} render={(routeProps: RouteComponentProps) => getComponentToRender(routeProps)} />
   )
 }
 

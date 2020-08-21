@@ -27,7 +27,8 @@ const Select: FunctionComponent<SelectProps> = (props) => {
     <div className={classes.Select}>
       {props.label ? <label>{props.label}{props.required ? '*' : null}</label> : null}
       <select className={selectFieldClasses.join(' ')} {...selectFieldProps}>
-        <option value={props.defaultOptionValue}>{props.defaultOptionText}</option>
+        {props.defaultOptionValue !== undefined ?
+          <option value={props.defaultOptionValue}>{props.defaultOptionText}</option> : null}
         {props.children}
       </select>
     </div>
