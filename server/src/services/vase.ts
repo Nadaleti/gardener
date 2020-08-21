@@ -24,7 +24,7 @@ class VaseService {
     const plantType = getByPlantType(request.plantType);
 
     if (!plantType) {
-      throw new APIError('Plant type not found', 400);
+      throw new APIError('Tipo de planta inválido', 400);
     }
 
     const vase = new Vase();
@@ -35,7 +35,7 @@ class VaseService {
     return await userService.getUser(userId)
       .then((user) => {
         if (!user) {
-          return Promise.reject(new APIError('User not found', 400));
+          return Promise.reject(new APIError('Usuário não encontrado', 400));
         }
 
         vase.user = user
@@ -47,7 +47,7 @@ class VaseService {
     const matchedVase = await getCustomRepository(VaseRepository).findOne(vaseId);
 
     if (!matchedVase) {
-      throw new APIError('Vase not found', 400);
+      throw new APIError('Vaso não encontrado', 400);
     }
 
     matchedVase.name = vase.name || matchedVase.name;
@@ -60,7 +60,7 @@ class VaseService {
   async deleteVase(vaseId: number) {
     await getCustomRepository(VaseRepository).findOne(vaseId)
       .then((vase) => {
-        if (!vase) throw new APIError('Vase not found', 400)
+        if (!vase) throw new APIError('Vaso não encontrado', 400)
       });
 
     await getCustomRepository(VaseRepository).delete(vaseId);
@@ -68,7 +68,7 @@ class VaseService {
 
   private validateVaseRequest(request: VaseRequest) {
     if (!request.name || !request.location || !request.plantType) {
-      throw new APIError('Some of the required fields are\'t filled', 400);
+      throw new APIError('Um ou mais campos não foram preenchidos', 400);
     }
   }
 }
